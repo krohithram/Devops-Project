@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="com.visualpathit.account.modelTest.RoleTest" time="0" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="com.visualpathit.account.modelTest.RoleTest" time="0.003" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_211\jre\bin"/>
     <property name="java.vm.version" value="25.211-b12"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
-    <property name="maven.multiModuleProjectDirectory" value="D:/Material/DevOps/Projects/VProfile_Project_Setup/vprofile-repo"/>
+    <property name="maven.multiModuleProjectDirectory" value="D:/Material/DevOps/Projects/Devops-Projects"/>
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
     <property name="path.separator" value=";"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -16,7 +16,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value=""/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="D:\Material\DevOps\Projects\VProfile_Project_Setup\vprofile-repo"/>
+    <property name="user.dir" value="D:\Material\DevOps\Projects\Devops-Projects"/>
     <property name="java.runtime.version" value="1.8.0_211-b12"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_211\jre\lib\endorsed"/>
@@ -29,7 +29,7 @@
     <property name="os.name" value="Windows 10"/>
     <property name="classworlds.conf" value="C:/Maven/apache-maven-3.8.6/bin/m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_211\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Users\Rohith\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Rohith\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\HashiCorp\Vagrant\bin;C:\Program Files\Git\cmd;C:\Program Files\Amazon\AWSCLIV2;C:\Maven\apache-maven-3.8.6\bin;C:\Users\Rohith\AppData\Local\Programs\Python\Python310\Scripts;C:\Users\Rohith\AppData\Local\Programs\Python\Python310;C:\Users\Rohith\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2022.2\bin;C:\Maven\apache-maven-3.8.6\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2022.2.1\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl;."/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_211\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Users\Rohith\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Rohith\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\HashiCorp\Vagrant\bin;C:\Program Files\Git\cmd;C:\Program Files\Amazon\AWSCLIV2;C:\Maven\apache-maven-3.8.6\bin;C:\Program Files\Kubernetes\Minikube;C:\Program Files\Kubernetes\Kubectl;C:\Users\Rohith\AppData\Local\Programs\Python\Python310\Scripts;C:\Users\Rohith\AppData\Local\Programs\Python\Python310;C:\Users\Rohith\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2022.2\bin;C:\Maven\apache-maven-3.8.6\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2022.2.1\bin;C:\Users\Rohith\AppData\Local\Programs\Microsoft VS Code\bin;C:\Terraform;C:\Users\Rohith\AppData\Local\GitHubDesktop\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl;."/>
     <property name="maven.conf" value="C:/Maven/apache-maven-3.8.6/conf"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
@@ -63,5 +63,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.visualpathit.account.modelTest.RoleTest" name="testUserDetailsHappyFlow" time="0"/>
+  <testcase classname="com.visualpathit.account.modelTest.RoleTest" name="testUserDetailsHappyFlow" time="0.003"/>
 </testsuite>

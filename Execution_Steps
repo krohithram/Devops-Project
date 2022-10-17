@@ -1,0 +1,67 @@
+Flow of Execution
+=================
+1. Login to AWS Account
+2. Create Key Pairs [krr-prod-key]
+3. Create Security Groups
+	krr-elb-sg -> Allow Port 80 & 443 - from Anywhere
+	krr-app-sg -> Allow Port 8080 - from krr-elb-sg group | Allow Port 22
+	krr-backend-sg -> Allow Port 3306(mysql), 5672(RabbitMQ), 11211(Memcache) - from krr-app-sg 
+					  Allow All Traffic from its own security group id. To interact backend services each other. | Allow Port 22 
+	
+4. Launch Backend EC2 Instances with User Data (Bash Scripts)
+   VM - krr-db - Centos 7 - Mysql
+   VM - krr-mc01 - Centos 7 - Memcache
+   VM - krr-rmq01 - Centos 7 - RabbitMQ
+   
+5. Update IP to name Mapping in Route 53.
+   Create Private hosted zone - vprofile.in
+   Create Record - [db01.vprofile.in - krr-db-Private-IP] - Simple Routing
+   Create Record - [mc01.vprofile.in - krr-mc01-Private-IP] - Simple Routing
+   Create Record - [rmq01.vprofile.in - krr-rmq01-Private-IP] - Simple Routing
+
+6. Launch Tomcat EC2 Instance.
+   VM - krr-app01 - Ubuntu 18 - Tomcat 
+	
+6. Build Application from Source Code in Local machine.
+   Update hostnames in src/main/resources/application.properties
+   Go to top level directory in AWS-LiftAndShift branch
+   Run - mvn install 
+   Artifact - target/vprofile-v2.war
+   
+7. Create IAM user (krr-s3-admin) Programatic access with AmazonS3FullAccess.
+   aws configure
+   aws s3 mb s3://krr-artifact-storage
+   
+8. Upload Artifact to S3 bucket
+   aws s3 cp vprofile-v2.war s3://krr-artifact-storage/vprofile-v2.war
+   
+9. Create a role to Download Articat into EC2 instance. 
+	Role - EC2 - AmazonS3FullAccess - (krr-artifact-storage-role)
+
+10. Download artifact to Tomcat EC2 Instance.
+	Assign krr-artifact-storage-role to krr-app01 Instance
+
+    Login to krr-app01 Instance.
+	# systemctl stop tomcat8
+	# cd /var/lib/tomcat8/webapps
+	# rm -rf ROOT
+	# apt install awscli -y
+	# aws s3 ls s3://krr-artifact-storage
+	# aws s3 copy s3://krr-artifact-storage/vprofile-v2.war /tmp/vprofile-v2.war
+	# cp /tmp/vprofile-v2.war /var/lib/tomcat8/webapps/ROOT.war
+	# systemctl start tomcat8
+	
+11. Setup ELB with HTTPS 
+	Create Target Group (krr-app-tg) | port-8080 | Health check - /login | Advance Health check override | port-8080 | Select krr-app01 instance Include as pending below.
+	
+	Create Load Balancer (krr-prod-elb) | krr-elb-sg | krr-app-tg for Port 80 & 443
+
+12. Create CName Record point ELB endpoint to name (vprofileapp.krrdevops.com) in Godaddy DNS.
+11. Verify Access url http://vprofileapp.krrdevops.com/
+
+12. Build Auto Scaling group for Tomcat Instances.
+	Create AMI of krr-app01 instance.
+	Create Launch configuration (krr-app-LC) for Auto Scaling Group | krr-app-LC | Select AMI | Instance type | IAM role | krr-app-sg | key pair 
+	
+	Create Auto Scaling Group (krr-app-asg) - select Launch Confiuration (krr-app-LC) -> Select VPC & Subnets -> Select Load Balancer (krr-prod-elb) & Target Group (krr-app-tg) -> Health check ELB -> Select Capacity -> Scaling policy -> Add Notification to SNS topic
+    

@@ -17,13 +17,13 @@
 
 - AWS Services
 
--- Beanstalk - VM for Tomcat, Nginx LB Replacement, Automation for VM scaling
--- S3/EFS - Storage for Artifact
--- RDS - For Database PAAS to replace Mysql on VM
--- Elastic Cache - To replace Memcached
--- Active MQ - To replace RabbitMQ
--- Route53 - For DNS
--- Cloudfront - For Content Delivery Network
+- Beanstalk - VM for Tomcat, Nginx LB Replacement, Automation for VM scaling
+- S3/EFS - Storage for Artifact
+- RDS - For Database PAAS to replace Mysql on VM
+- Elastic Cache - To replace Memcached
+- Active MQ - To replace RabbitMQ
+- Route53 - For DNS
+- Cloudfront - For Content Delivery Network
 
 - EC2 Instances, ELB, Autoscaling, S3, RDS, Elastic Cache, Active MQ, Route53 Cloudfront
 

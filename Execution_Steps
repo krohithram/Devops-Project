@@ -1,0 +1,67 @@
+# Flow of Execution
+
+## Steps-1: Create Key Pair - [krr-bs-key] (For Beanstalk Instances)
+
+## Steps-2: Create Security Group [krr-backend-sg] for Backend Services and allow all traffic from itself.
+
+## Steps-3: Create RDS Instance MySQL.
+
+1. Create Subnet Group [krr-rds-subnet-group] - Choose Availability Zones & Subnets - Click Create.
+2. Create Parameter Group [krr-rds-parameter-group] - DB Family mysql5.7 - Click Create.
+3. Create Database - select Standard - Engine MySQL - Engine Version 5.7.x - Templates Free Tier - DB Name [krr-vprofile] - Select Instance type - Select Storage type & Storage - Select DB Subnet Group [krr-rds-subnet-group] - Public Access No - Select Security Group [krr-backend-sg] - Initial database name [accounts] - Select Parameter Group [krr-rds-parameter-group] - Click Create Database
+
+Note: Credentials, RDS Endpoint & Port Number
+
+## Steps-4: Create ElastiCache
+
+1. Create Parameter Group [krr-elasticache-parameter-group] - Family [memcached1.4] - Click Create.
+2. Create Subnet Group [krr-elasticache-subnet-group] - Select Subnets - Click Create.
+3. Create Memcached Cluster [krr-elasticache-service] - Location [AWS Cloud] - Engine Version [1.4.5] - select parameter-group [krr-elasticache-parameter-group] - Select Node Type - Select Subnet group [krr-elasticache-subnet-group] - Select Security Group [krr-backend-sg] - Click Create.
+
+Note: ElastiCache Endpoint & Port Number
+
+## Steps-5: Create Amazon MQ
+- Get Started - Broker engine types [RabbitMQ] - Select Deployment mode - Broker Name [krr-rmq] - Select Broker instance type - Set Username & Password - Select Broker engine version - Private Access - Security group [krr-backend-sg] - Click Create Broker.
+
+Note: Credentials, RabbitMQ Endpoint & Port Number
+
+## Steps-6: Launch EC2 instance to initialize RDS DB Instance (MySQL Client) Temporary.
+
+- Clone Repository - https://github.com/krohithram/Devops-Projects.git
+- git checkout AWS-ReArchitect
+- cd src/main/resources/
+- mysql -h <rds endpoint> -u admin -p<password> accounts < db_backup.sql
+
+## Steps-7: Create Elastic Beanstalk
+Create Application - Name [vprofile-java-app] - Platform [Tomcat] - Platform branch [Tomcat 8.5 with corretto 11] - Application code [Sample] - Click Configure More Options - Configuration presets [Custom] - 
+
+Instances (Edit) [ Select Security Group - krr-backend-sg] - 
+Capacity (Edit) - [LoadBalanced - Instance 2-4 - Choose Instance types - Availability Zones "Any" - Save] 
+Rolling updates and deployments (Edit) - [Deployment policy (Rolling) - Percentage (50%) -  click Save]
+Security (Edit) - [EC2 key pair (krr-bs-key) - Select / Create IAM instance profile - Click Save]
+
+Click Create Environment.
+
+## Step-8: Modify krr-backend-sg to allow traffic from - SecurityGroup for ElasticBeanstalk environment.
+
+## Step-9: Elastic Beanstalk - Environments - Vprofilejavaapp-env - Configuration - LoadBalancer (Edit) [ Add Listner 443 - Update Healt check "/login" - Enable Stickiness - Save] - Apply.
+
+## Step-10: Build & Deploy Artifact.
+
+Clone Repository
+Checkout AWS-ReArchitect
+Update details in src/main/resources/application.properties
+Go to top level directory in AWS-LiftAndShift branch
+Run - mvn install 
+Artifact - target/vprofile-v2.war
+
+Elastic Beanstalk - Environments - Vprofilejavaapp-env - Application versions - Upload [vprofile-v2.war] - Select version [vprofile-v2.war] - Action - Deploy.
+
+## Step-11: Create DNS Record CName Elastic Beanstalk Environment Endpoint to vprofile.krrdevops.com 
+
+Access URL & Check 
+
+Step-12: Amazon CloudFront 
+Create CloudFront - Origin [vprofile.krrdevops.com] - Viewer Protocol [HTTP & HTTPS] - Allowed Method (All) - use all edge locations - Select SSL - TLSv1 - create distribution.
+
+ 
